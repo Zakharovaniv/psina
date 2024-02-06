@@ -5,31 +5,21 @@ using UnityEngine;
 public class Dog : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float _movementSpeed;
-    public float _rotationSpeed;
+    [SerializeField] private float _movementSpeed;
+    [SerializeField] private float _rotationSpeed;
+    [SerializeField] Transform _cameraMount;
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.Translate(Vector3.forward * _movementSpeed);
-        }
-         if (Input.GetKey(KeyCode.A))
-        {
-           transform.Rotate(Vector3.up * -_rotationSpeed);
-        } 
-        if (Input.GetKey(KeyCode.S))
-        {
-           transform.Translate(Vector3.back * _movementSpeed);
-        } 
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Rotate(Vector3.up * _rotationSpeed);
-        }
+        transform.Translate(Vector3.forward *Input.GetAxis("Vertical")* _movementSpeed);
+        transform.Rotate(Vector3.up, _rotationSpeed * Input.GetAxis("Horizontal"));
+        
     }
-    public void SetGame(Game value)
+    public void SetCamera(GameObject cam)
     {
-        value.Register(gameObject);
+    
+        cam.transform.SetParent(_cameraMount, false);
+     
     }
 }

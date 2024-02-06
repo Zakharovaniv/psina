@@ -6,7 +6,9 @@ using UnityEngine;
 public class Game : MonoBehaviour
 {
     
-    public GameObject _ObjectToInstantiate;
+    [SerializeField] private GameObject _ObjectToInstantiate;
+    [SerializeField] private Transform _spawnPoint;
+    [SerializeField] private GameObject _camera;
    
     private List<GameObject> _objectToDestroy = new();
     public void Update()
@@ -21,12 +23,13 @@ public class Game : MonoBehaviour
        }
         if (Input.GetKeyDown(KeyCode.Alpha2))
        {
-          GameObject go =  Instantiate(_ObjectToInstantiate);
+          GameObject go =  Instantiate(_ObjectToInstantiate, _spawnPoint.position, _spawnPoint.rotation);
           Dog component = go.GetComponent<Dog>();
           if (component != null)
           {
-               component.SetGame(this);
+               component.SetCamera(_camera);
           }
+          Register(go);
        }
 
     }
